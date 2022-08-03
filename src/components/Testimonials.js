@@ -29,8 +29,15 @@ const Testimonials = () => {
           
       <Swiper    className="align-items-center"
             modules={[Navigation, Pagination, A11y]}
-            // spaceBetween={20}
-            slidesPerView={3}
+            spaceBetween={30}
+            breakpoints={{
+              576: {
+                slidesPerView: 1,
+              },
+              768: {
+                slidesPerView: 4,
+              },
+            }}
             navigation
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}>
