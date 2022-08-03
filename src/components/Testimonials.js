@@ -35,7 +35,7 @@ const Testimonials = () => {
                 slidesPerView: 1,
               },
               768: {
-                slidesPerView: 4,
+                slidesPerView: 3,
               },
             }}
             navigation
