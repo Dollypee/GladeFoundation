@@ -1,7 +1,42 @@
-import React from 'react'
+import React, {useState} from 'react'
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Contact = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [request, setRequest] = useState(0);
+  const [requestMessage, setRequestMessage] = useState('');
+
+  const clearFields = () => {
+    setName('');
+    setEmail('');
+    setPhone('');
+    setRequest(0);
+    setRequestMessage('');
+  }
+
+  const handleSubmit = () => {
+    try {
+      if (name === '' || email === '' || phone === '' || request === 0 || requestMessage === '') {
+        toast.error('Please fill all fields')
+      } else {
+        toast.success(`Your request is being processed`);
+        clearFields();
+       }
+        
+    } catch (error) {
+      toast.error(error);
+    }
+  }
+
   return (
+    <>
+      <Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
     <section id="contact" className="contact">
     <div className="container" data-aos="fade-up">
 
@@ -48,24 +83,41 @@ const Contact = () => {
           <form className="php-email-form">
             <div className="row">
               <div className="col form-group">
-                <input type="text" name="name" className="form-control" id="name" placeholder="Your Name" required />
+                    <input type="text"
+                      value={name}
+                onChange={(e)=> setName(e.target.value)}      name="name" className="form-control" id="name" placeholder="Your Name" required />
               </div>
+           
+                <div className="col form-group">
+                    <input type="tel"
+                 value={phone}
+                onChange={(e)=> setPhone(e.target.value)}       className="form-control" name="phone" id="phone" placeholder="Your Phone" required />
+              </div>
+              </div>
+              <div className="row">
               <div className="col form-group">
-                <input type="email" className="form-control" name="email" id="email" placeholder="Your Email" required />
+                    <input type="email"
+                       value={email}
+                onChange={(e)=> setEmail(e.target.value)} className="form-control" name="email" id="email" placeholder="Your Email" required />
+                </div>
               </div>
+            <div className="form-group">
+                
+                  <select className="form-select"
+                   value={request}
+                onChange={(e)=> setRequest(e.target.value)} >
+  <option value={0}>Request Type</option>
+  <option value="1">Medical Support</option>
+  <option value="2">School Fees</option>
+  <option value="3">Others</option>
+</select>
             </div>
             <div className="form-group">
-              <input type="text" className="form-control" name="subject" id="subject" placeholder="Subject" required />
+                  <textarea
+                     value={requestMessage}
+                onChange={(e)=> setRequestMessage(e.target.value)} className="form-control" name="message" rows="5" placeholder="Please provide a request message" required></textarea>
             </div>
-            <div className="form-group">
-              <textarea className="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-            </div>
-            <div className="my-3">
-              <div className="loading">Loading</div>
-              <div className="error-message"></div>
-              <div className="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div className="text-center"><button type="submit">Request</button></div>
+            <div className="text-center"><button type="button" onClick={handleSubmit}>Request</button></div>
           </form>
         </div>
 
@@ -73,6 +125,8 @@ const Contact = () => {
 
     </div>
     </section>
+    </>
+
   )
 }
 

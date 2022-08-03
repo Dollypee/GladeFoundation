@@ -1,6 +1,12 @@
 import React from 'react'
+import Scroll from 'react-scroll'
+let Link = Scroll.Link;
 
 const Footer = () => {
+  const scroll = (id) => {
+    const section = document.querySelector(id);
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <>
@@ -23,11 +29,22 @@ const Footer = () => {
 
               <div className="col-lg-4 col-md-6 footer-links">
                 <h4>Useful Links</h4>
+
                 <ul>
-                  <li><i className="bx bx-chevron-right"></i> <a href="#about">About us</a></li>
-                  <li><i className="bx bx-chevron-right"></i> <a href="#contact">Services</a></li>
-                  <li><i className="bx bx-chevron-right"></i> <a href="/">Terms of service</a></li>
-                  <li><i className="bx bx-chevron-right"></i> <a href="/">Privacy policy</a></li>
+                  <li>
+                    <Link onClick={() => scroll('#home')} >
+                      <i className="bx bx-chevron-right"></i> Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => scroll('#about')}> <i className="bx bx-chevron-right"></i>Services</Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => scroll('#home')}> <i className="bx bx-chevron-right"></i> Terms of Service</Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => scroll('#home')}>  <i className="bx bx-chevron-right"></i> Privacy Policy</Link>
+                  </li>
                 </ul>
               </div>
 

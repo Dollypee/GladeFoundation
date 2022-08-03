@@ -1,6 +1,7 @@
 import React from 'react'
+import {GladePay} from './index'
 
-const About = () => {
+const About = ({ GladepayProps}) => {
   return (
     <section id="about" className="about section-bg">
       <div className="container" data-aos="fade-up">
@@ -12,7 +13,8 @@ const About = () => {
               <p>
                 We are a world wide charity foundation meeting needs all over the world and specifically those affected by the Covid 19
               </p>
-            <button className="about-btn">Donate Now</button>
+              {/* <button className="about-btn">Donate Now</button> */}
+              <GladePay GladepayProps={GladepayProps} text="Donate Now" className="about-btn" />
             </div>
           </div>
           <div className="col-xl-7 d-flex align-items-stretch">

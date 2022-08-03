@@ -1,25 +1,35 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import './assets/css/style.css'
+import './assets/css/style.css';
 
-import {GladepayButton}   from 'react-gladepay-2';
 
 
 import { Navbar, Hero, Continents, About, Count, Testimonials, Contact, Reach, Footer } from "./components"
 
-function App() {
-  const [active, setActive] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
-  const [paymentDetails, setPaymentDetails] = useState({
-    MID: process.env.MERCHANT_ID, //Gladepay Merchant ID
-    email: "demo@gmail.com",  // customer email
-    amount: 1000000, //equals NGN100,
-    is_production: false, //is_production,
-    key: process.env.KEY
-  });
+function App() {
+  const [visible, setVisible] = useState(false)
+
+  const toggleVisible = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 300) {
+      setVisible(true)
+    }
+    else if (scrolled <= 300) {
+      setVisible(false)
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  window.addEventListener('scroll', toggleVisible);
+
 
   const callback = (response) => {
     console.log(response); // card charged successfully, get reference here
@@ -29,55 +39,39 @@ function App() {
     console.log("Payment closed");
   }
 
+  const [paymentDetails, setPaymentDetails] = useState({
+    firstname: "Sponsor1",
+    lastname: "Support",
+    description: "Sponsor Glade Foundation", title: "Glade Foundation",
+    amount: 1000000,
+    onclose: close,
+    callback: callback,
+    country: "NG",
+    currency: "NGN",
+    is_production: false, //is_production,
+  });
 
   useEffect(() => {
     AOS.init();
     AOS.refresh();
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (scrollPosition > 100) {
-        setActive(true);
-      } else {
-        setActive(false);
-      }
-    };
-  }, [scrollPosition]);
-
-
-
-
-  const handleScroll = event => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  }
+  }, []);
 
   return (
     <>
-      <Navbar />
-      <main onScroll={handleScroll}>
-        <Hero />
-        {/* <GladepayButton
-          text="Make Payment"
-          className="payButton"
-          callback={callback}
-          onClose={close}
-          disabled={true} //disable payment button
-          embed={true} //payment embed in your app instead of a pop up
-          email={paymentDetails.email}
-          amount={paymentDetails.amount}
-          MID={paymentDetails.MID}
-          tag="button"//it can be button or a or input tag 
-        /> */}
+      <Navbar GladepayProps={paymentDetails} />
+      <main>
+        <Hero GladepayProps={paymentDetails} />
         <Continents />
-        <About />
+        <About GladepayProps={paymentDetails} />
         <Count />
-        <Reach />
+        <Reach GladepayProps={paymentDetails} />
         <Testimonials />
         <Contact />
         <Footer />
-        <a href="/" className={active ? 'back-to-top active d-flex align-items-center justify-content-center' : 'back-to-top d-flex align-items-center justify-content-center'}><i className="bi bi-arrow-up-short"></i></a>
+        <button
+          onClick={scrollToTop} className={visible ? 'back-to-top active d-flex align-items-center justify-content-center' : 'back-to-top d-flex align-items-center justify-content-center'}>
+          <i className="bi bi-arrow-up-short"></i>
+        </button>
       </main>
 
     </>

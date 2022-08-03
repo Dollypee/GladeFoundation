@@ -1,7 +1,8 @@
 import React from 'react'
 import Globe from '../assets/img/continents/Continent.webp'
+import GladePay from './GladePay'
 
-const Reach = () => {
+const Reach = ({ GladepayProps}) => {
   return (
     <section id="reach" className="reach">
       <div className="container" data-aos="fade-up">
@@ -16,7 +17,7 @@ const Reach = () => {
           <div className="col-lg-7 mx-auto text-center">
 
             <img className='img-fluid' src={Globe} alt="" />
-            <button className="donate-btn mt-3">Donate Now</button>
+            <GladePay GladepayProps={GladepayProps} className="donate-btn mt-3" text="Donate Now" />
           </div>
 
         </div>
